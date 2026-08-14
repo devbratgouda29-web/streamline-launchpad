@@ -824,22 +824,22 @@ function RankColumnView({
                 <div className="flex w-full flex-col items-center gap-1.5">
                   <span
                     className={cn(
-                      "whitespace-nowrap text-xs font-semibold tracking-wider",
-                      isCurrent ? "text-accent-amber" : "text-muted-foreground",
+                      "whitespace-nowrap text-sm font-medium tracking-wide text-zinc-300",
+                      isCurrent && "text-accent-amber",
                     )}
                   >
                     LVL {m.level} · {m.streak}d
                   </span>
                   {isCurrent ? (
-                    <span className="rounded-full bg-accent-amber py-1 px-3 text-xs font-black uppercase tracking-wider text-accent-amber-foreground">
+                    <span className="rounded-full bg-accent-amber px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-amber-foreground">
                       You
                     </span>
                   ) : unlocked ? (
-                    <span className="rounded-full bg-success/15 py-1 px-3 text-xs font-black uppercase tracking-wider text-success">
+                    <span className="rounded-full bg-success/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-success">
                       Unlocked
                     </span>
                   ) : (
-                    <span className="rounded-full bg-secondary py-1 px-3 text-xs font-black uppercase tracking-wider text-muted-foreground">
+                    <span className="rounded-full bg-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                       Locked
                     </span>
                   )}
