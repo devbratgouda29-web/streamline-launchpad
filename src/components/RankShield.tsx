@@ -217,13 +217,6 @@ export function RankShieldFrame({
         </h2>
 
 
-        <h2
-          className="text-center text-lg font-black uppercase tracking-[0.14em]"
-          style={{ color: tier.stroke }}
-        >
-          {rankName}
-        </h2>
-
         <div className="w-full">
           <div className="mb-1.5 flex items-center justify-between text-[11px]">
             <span className="text-muted-foreground">
