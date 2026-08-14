@@ -207,19 +207,15 @@ export function RankShieldFrame({
           {tier.name} Tier · Lvl {level} / 15
         </span>
 
-        <div className="relative">
-          {png ? (
-            <img
-              src={png}
-              alt={`Rank ${level} badge`}
-              className="h-40 w-40 select-none object-contain"
-              style={{ filter: `drop-shadow(0 8px 28px ${tier.glow})` }}
-              draggable={false}
-            />
-          ) : (
-            <TierShieldSVG level={level} size={168} />
-          )}
-        </div>
+        <HeroShieldImg level={level} tier={tier} />
+
+        <h2
+          className="text-center text-lg font-black uppercase tracking-[0.14em]"
+          style={{ color: tier.stroke }}
+        >
+          {rankName}
+        </h2>
+
 
         <h2
           className="text-center text-lg font-black uppercase tracking-[0.14em]"
