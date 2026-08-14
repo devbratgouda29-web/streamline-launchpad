@@ -927,8 +927,9 @@ function RankModal({
 
           <TitleAsset
             milestone={milestone}
-            boxClassName="w-full h-auto object-contain"
+            boxClassName="max-h-[40px] w-auto object-contain"
             fallbackClassName="w-full"
+            muted={!unlocked}
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
