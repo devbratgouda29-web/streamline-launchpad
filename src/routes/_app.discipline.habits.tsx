@@ -798,7 +798,7 @@ function RankColumnView({
               type="button"
               onClick={() => onSelectRank(m)}
               className={cn(
-                "flex flex-col items-center gap-2 overflow-hidden rounded-2xl border p-4 text-left transition-colors hover:brightness-110",
+                "flex flex-col items-center gap-2 overflow-hidden rounded-2xl border p-3 md:p-4 text-left transition-colors hover:brightness-110",
                 isCurrent
                   ? "border-accent-amber bg-accent-amber/10 ring-2 ring-accent-amber shadow-[0_0_24px_-2px_oklch(0.78_0.14_78/0.6)]"
                   : unlocked
@@ -824,22 +824,22 @@ function RankColumnView({
                 <div className="flex w-full flex-col items-center gap-1.5">
                   <span
                     className={cn(
-                      "whitespace-nowrap text-xs font-semibold tracking-wider",
-                      isCurrent ? "text-accent-amber" : "text-muted-foreground",
+                      "whitespace-nowrap text-sm font-medium tracking-wide text-zinc-300",
+                      isCurrent && "text-accent-amber",
                     )}
                   >
                     LVL {m.level} · {m.streak}d
                   </span>
                   {isCurrent ? (
-                    <span className="rounded-full bg-accent-amber py-1 px-3 text-xs font-black uppercase tracking-wider text-accent-amber-foreground">
+                    <span className="rounded-full bg-accent-amber px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-amber-foreground">
                       You
                     </span>
                   ) : unlocked ? (
-                    <span className="rounded-full bg-success/15 py-1 px-3 text-xs font-black uppercase tracking-wider text-success">
+                    <span className="rounded-full bg-success/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-success">
                       Unlocked
                     </span>
                   ) : (
-                    <span className="rounded-full bg-secondary py-1 px-3 text-xs font-black uppercase tracking-wider text-muted-foreground">
+                    <span className="rounded-full bg-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                       Locked
                     </span>
                   )}
@@ -957,7 +957,7 @@ function RankShieldImg({
     return (
       <div
         className={cn(
-          "grid w-36 h-36 md:w-40 md:h-40 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
+          "grid w-44 h-44 md:w-52 md:h-52 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
           !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
@@ -972,7 +972,7 @@ function RankShieldImg({
       alt={`Level ${level} Shield`}
       onError={() => setFailed(true)}
       className={cn(
-        "w-36 h-36 md:w-40 md:h-40 mx-auto object-contain drop-shadow-md select-none transition-all",
+        "w-44 h-44 md:w-52 md:h-52 object-contain mx-auto drop-shadow-md select-none transition-all",
         !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
@@ -997,7 +997,7 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "block h-auto min-h-10 md:min-h-12 w-4/5 max-w-[200px] mx-auto my-3 truncate text-center text-xs font-black uppercase tracking-wider",
+          "block h-auto min-h-[40px] w-full max-w-[90%] mx-auto my-2 truncate text-center text-xs font-black uppercase tracking-wider",
           !unlocked && "opacity-70 grayscale brightness-90",
           className,
         )}
@@ -1012,7 +1012,7 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "w-4/5 max-w-[200px] h-auto mx-auto object-contain my-3 select-none transition-all",
+        "w-full max-w-[90%] h-auto min-h-[40px] mx-auto object-contain my-2 select-none transition-all",
         !unlocked && "opacity-70 grayscale brightness-90",
         className,
       )}
