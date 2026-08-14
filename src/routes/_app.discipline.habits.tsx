@@ -1046,26 +1046,38 @@ function TitleAsset({
   milestone,
   boxClassName,
   fallbackClassName,
+  muted = false,
 }: {
   milestone: Milestone;
   boxClassName?: string;
   fallbackClassName?: string;
+  muted?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = `/shields/${milestone.titleImg}`;
+  const src = `/shields/title-${milestone.level}.png`;
   if (!failed) {
     return (
       <img
         src={src}
         alt={milestone.name}
         onError={() => setFailed(true)}
-        className={cn("select-none object-contain", boxClassName ?? "h-8")}
+        className={cn(
+          "select-none object-contain transition-all",
+          boxClassName ?? "max-h-[40px] w-auto object-contain",
+          muted && "opacity-30 grayscale brightness-50",
+        )}
         draggable={false}
       />
     );
   }
   return (
-    <div className={cn("flex items-center gap-2 rounded-full border border-accent-amber/40 bg-accent-amber/10 px-4 py-1.5", fallbackClassName)}>
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-full border border-accent-amber/40 bg-accent-amber/10 px-4 py-1.5",
+        muted && "opacity-30 grayscale brightness-50",
+        fallbackClassName,
+      )}
+    >
       <Shield className="h-3.5 w-3.5 text-accent-amber" />
       <span className="truncate text-[11px] font-black uppercase tracking-[0.18em] text-accent-amber">
         {milestone.name}
