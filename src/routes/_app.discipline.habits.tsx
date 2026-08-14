@@ -824,8 +824,9 @@ function RankColumnView({
               <div className="flex w-full flex-col items-center gap-2">
                 <TitleAsset
                   milestone={m}
-                  boxClassName="w-full h-auto object-contain"
+                  boxClassName="max-h-[40px] w-auto object-contain"
                   fallbackClassName="w-full"
+                  muted={!unlocked}
                 />
 
                 {/* Level + status */}
