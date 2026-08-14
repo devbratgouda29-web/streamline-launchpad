@@ -798,7 +798,7 @@ function RankColumnView({
               type="button"
               onClick={() => onSelectRank(m)}
               className={cn(
-                "flex flex-col justify-between items-center h-full overflow-hidden rounded-2xl border p-2 md:p-3 text-left transition-colors hover:brightness-110",
+                "flex flex-col justify-between items-center h-full overflow-hidden rounded-2xl border px-3 py-4 text-left transition-colors hover:brightness-110",
                 isCurrent
                   ? "border-accent-amber bg-accent-amber/10 ring-2 ring-accent-amber shadow-[0_0_24px_-2px_oklch(0.78_0.14_78/0.6)]"
                   : unlocked
