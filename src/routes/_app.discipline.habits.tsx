@@ -824,8 +824,9 @@ function RankColumnView({
               <div className="flex w-full flex-col items-center gap-2">
                 <TitleAsset
                   milestone={m}
-                  boxClassName="w-full h-auto object-contain"
+                  boxClassName="max-h-[40px] w-auto object-contain"
                   fallbackClassName="w-full"
+                  muted={!unlocked}
                 />
 
                 {/* Level + status */}
@@ -926,8 +927,9 @@ function RankModal({
 
           <TitleAsset
             milestone={milestone}
-            boxClassName="w-full h-auto object-contain"
+            boxClassName="max-h-[40px] w-auto object-contain"
             fallbackClassName="w-full"
+            muted={!unlocked}
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -962,7 +964,7 @@ function ShieldAsset({
   boxClassName?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = `/shields/${milestone.shield}`;
+  const src = `/shields/shield-${milestone.level}.png`;
   if (!failed) {
     if (boxClassName) {
       return (
@@ -970,7 +972,11 @@ function ShieldAsset({
           src={src}
           alt={`${milestone.name} shield`}
           onError={() => setFailed(true)}
-          className={cn("select-none object-contain", boxClassName, muted && "opacity-25")}
+          className={cn(
+            "select-none object-contain transition-all",
+            boxClassName,
+            muted && "opacity-30 grayscale brightness-50",
+          )}
           draggable={false}
         />
       );
@@ -982,7 +988,10 @@ function ShieldAsset({
         width={size}
         height={size}
         onError={() => setFailed(true)}
-        className={cn("select-none object-contain", muted && "opacity-25")}
+        className={cn(
+          "select-none object-contain transition-all",
+          muted && "opacity-30 grayscale brightness-50",
+        )}
         style={{ width: size, height: size }}
         draggable={false}
       />
@@ -1002,7 +1011,7 @@ function ShieldFallback({
 }) {
   return (
     <div
-      className={cn("relative grid place-items-center", muted && "opacity-25")}
+      className={cn("relative grid place-items-center", muted && "opacity-30 grayscale brightness-50")}
       style={{ width: size, height: size }}
     >
       <svg viewBox="0 0 100 110" width={size} height={size}>
@@ -1038,26 +1047,38 @@ function TitleAsset({
   milestone,
   boxClassName,
   fallbackClassName,
+  muted = false,
 }: {
   milestone: Milestone;
   boxClassName?: string;
   fallbackClassName?: string;
+  muted?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = `/shields/${milestone.titleImg}`;
+  const src = `/shields/title-${milestone.level}.png`;
   if (!failed) {
     return (
       <img
         src={src}
         alt={milestone.name}
         onError={() => setFailed(true)}
-        className={cn("select-none object-contain", boxClassName ?? "h-8")}
+        className={cn(
+          "select-none object-contain transition-all",
+          boxClassName ?? "max-h-[40px] w-auto object-contain",
+          muted && "opacity-30 grayscale brightness-50",
+        )}
         draggable={false}
       />
     );
   }
   return (
-    <div className={cn("flex items-center gap-2 rounded-full border border-accent-amber/40 bg-accent-amber/10 px-4 py-1.5", fallbackClassName)}>
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-full border border-accent-amber/40 bg-accent-amber/10 px-4 py-1.5",
+        muted && "opacity-30 grayscale brightness-50",
+        fallbackClassName,
+      )}
+    >
       <Shield className="h-3.5 w-3.5 text-accent-amber" />
       <span className="truncate text-[11px] font-black uppercase tracking-[0.18em] text-accent-amber">
         {milestone.name}
