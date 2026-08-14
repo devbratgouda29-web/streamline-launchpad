@@ -798,7 +798,7 @@ function RankColumnView({
               type="button"
               onClick={() => onSelectRank(m)}
               className={cn(
-                "flex flex-col items-center gap-2 overflow-hidden rounded-2xl border p-3 md:p-4 text-left transition-colors hover:brightness-110",
+                "flex flex-col justify-between items-center h-full overflow-hidden rounded-2xl border p-2 md:p-3 text-left transition-colors hover:brightness-110",
                 isCurrent
                   ? "border-accent-amber bg-accent-amber/10 ring-2 ring-accent-amber shadow-[0_0_24px_-2px_oklch(0.78_0.14_78/0.6)]"
                   : unlocked
@@ -824,22 +824,22 @@ function RankColumnView({
                 <div className="flex w-full flex-col items-center gap-1.5">
                   <span
                     className={cn(
-                      "whitespace-nowrap text-sm font-medium tracking-wide text-zinc-300",
+                      "whitespace-nowrap text-sm font-bold tracking-wider text-zinc-200 mt-1",
                       isCurrent && "text-accent-amber",
                     )}
                   >
                     LVL {m.level} · {m.streak}d
                   </span>
                   {isCurrent ? (
-                    <span className="rounded-full bg-accent-amber px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-amber-foreground">
+                    <span className="rounded-full bg-accent-amber px-4 py-1 text-xs font-extrabold uppercase tracking-widest text-accent-amber-foreground">
                       You
                     </span>
                   ) : unlocked ? (
-                    <span className="rounded-full bg-success/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-success">
+                    <span className="rounded-full bg-success/15 px-4 py-1 text-xs font-extrabold uppercase tracking-widest text-success">
                       Unlocked
                     </span>
                   ) : (
-                    <span className="rounded-full bg-secondary px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    <span className="rounded-full bg-secondary px-4 py-1 text-xs font-extrabold uppercase tracking-widest text-muted-foreground">
                       Locked
                     </span>
                   )}
@@ -997,7 +997,7 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "block h-auto min-h-[40px] w-full max-w-[90%] mx-auto my-2 truncate text-center text-xs font-black uppercase tracking-wider",
+          "block h-14 md:h-16 w-full mx-auto my-1 truncate text-center text-xs font-black uppercase tracking-wider",
           !unlocked && "opacity-70 grayscale brightness-90",
           className,
         )}
@@ -1012,7 +1012,7 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "w-full max-w-[90%] h-auto min-h-[40px] mx-auto object-contain my-2 select-none transition-all",
+        "w-full h-14 md:h-16 object-contain scale-110 my-1 mx-auto select-none transition-all",
         !unlocked && "opacity-70 grayscale brightness-90",
         className,
       )}
