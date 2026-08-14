@@ -808,10 +808,10 @@ function RankColumnView({
             >
               {/* Shield */}
               <div className="relative flex h-40 w-full items-center justify-center">
-                <ShieldAsset
-                  milestone={m}
-                  boxClassName="h-36 max-h-36 w-auto object-contain"
-                  muted={!unlocked}
+                <RankShieldImg
+                  level={m.level}
+                  unlocked={unlocked}
+                  className="h-36 max-h-36 w-auto object-contain"
                 />
                 {!unlocked && (
                   <span className="pointer-events-none absolute inset-0 grid place-items-center">
@@ -822,11 +822,11 @@ function RankColumnView({
 
               {/* Title artwork */}
               <div className="flex w-full flex-col items-center gap-2">
-                <TitleAsset
-                  milestone={m}
-                  boxClassName="max-h-[40px] w-auto object-contain"
-                  fallbackClassName="w-full"
-                  muted={!unlocked}
+                <RankTitleImg
+                  level={m.level}
+                  title={m.name}
+                  unlocked={unlocked}
+                  className="max-h-[40px] w-auto object-contain"
                 />
 
                 {/* Level + status */}
