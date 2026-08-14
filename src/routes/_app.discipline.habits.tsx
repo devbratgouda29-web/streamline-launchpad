@@ -624,8 +624,8 @@ function ClockView({
 
         {/* Side-by-side rank identity: shield + title, fixed 96px cap, aspect preserved */}
         <div className="flex w-full items-center justify-center gap-4">
-          <RankShieldImg level={milestone.level} className="h-24 max-h-24 w-auto" />
-          <RankTitleImg level={milestone.level} title={milestone.name} className="h-24 max-h-24 w-auto max-w-[70%]" />
+          <RankShieldImg level={milestone.level} unlocked className="h-24 max-h-24 w-auto" />
+          <RankTitleImg level={milestone.level} title={milestone.name} unlocked className="h-24 max-h-24 w-auto max-w-[70%]" />
         </div>
         <p className="max-w-sm text-center text-[13px] italic leading-relaxed text-muted-foreground">
           {milestone.desc}
@@ -808,11 +808,7 @@ function RankColumnView({
             >
               {/* Shield */}
               <div className="relative flex h-40 w-full items-center justify-center">
-                <RankShieldImg
-                  level={m.level}
-                  unlocked={unlocked}
-                  className="h-36 max-h-36 w-auto object-contain"
-                />
+                <RankShieldImg level={m.level} unlocked={unlocked} />
                 {!unlocked && (
                   <span className="pointer-events-none absolute inset-0 grid place-items-center">
                     <Lock className="h-5 w-5 text-muted-foreground" />
@@ -822,12 +818,7 @@ function RankColumnView({
 
               {/* Title artwork */}
               <div className="flex w-full flex-col items-center gap-2">
-                <RankTitleImg
-                  level={m.level}
-                  title={m.name}
-                  unlocked={unlocked}
-                  className="max-h-[40px] w-auto object-contain"
-                />
+                <RankTitleImg level={m.level} title={m.name} unlocked={unlocked} />
 
                 {/* Level + status */}
                 <div className="flex w-full flex-col items-center gap-1">
@@ -916,7 +907,7 @@ function RankModal({
             <RankShieldImg
               level={milestone.level}
               unlocked={unlocked}
-              className="h-48 max-h-48 w-auto object-contain"
+              className="h-48 max-h-48 w-auto"
             />
             {!unlocked && (
               <span className="pointer-events-none absolute inset-0 grid place-items-center">
@@ -929,7 +920,7 @@ function RankModal({
             level={milestone.level}
             title={milestone.name}
             unlocked={unlocked}
-            className="max-h-[40px] w-auto object-contain"
+            className="max-h-10 w-auto"
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -966,8 +957,8 @@ function RankShieldImg({
     return (
       <div
         className={cn(
-          "grid place-items-center rounded-xl bg-secondary text-muted-foreground",
-          !unlocked && "opacity-30 grayscale brightness-50",
+          "grid w-28 h-28 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
+          !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
       >
@@ -981,8 +972,8 @@ function RankShieldImg({
       alt={`Level ${level} Shield`}
       onError={() => setFailed(true)}
       className={cn(
-        "select-none object-contain transition-all",
-        !unlocked && "opacity-30 grayscale brightness-50",
+        "w-28 h-28 mx-auto object-contain drop-shadow-md select-none transition-all",
+        !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
       draggable={false}
@@ -1006,8 +997,8 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "truncate text-center text-[11px] font-black uppercase tracking-[0.18em]",
-          !unlocked && "opacity-30 grayscale",
+          "block max-h-8 w-auto mx-auto mt-2 mb-1 truncate text-center text-[11px] font-black uppercase tracking-[0.18em]",
+          !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
       >
@@ -1021,8 +1012,8 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "select-none object-contain transition-all",
-        !unlocked && "opacity-30 grayscale brightness-50",
+        "max-h-8 w-auto mx-auto object-contain mt-2 mb-1 select-none transition-all",
+        !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
       draggable={false}
