@@ -951,138 +951,81 @@ function RankModal({
   );
 }
 
-// ---------- Shield / Title assets with graceful fallbacks ----------
-function ShieldAsset({
-  milestone,
-  size = 120,
-  muted = false,
-  boxClassName,
-}: {
-  milestone: Milestone;
-  size?: number;
-  muted?: boolean;
-  boxClassName?: string;
-}) {
-  const [failed, setFailed] = useState(false);
-  const src = `/shields/shield-${milestone.level}.png`;
-  if (!failed) {
-    if (boxClassName) {
-      return (
-        <img
-          src={src}
-          alt={`${milestone.name} shield`}
-          onError={() => setFailed(true)}
-          className={cn(
-            "select-none object-contain transition-all",
-            boxClassName,
-            muted && "opacity-30 grayscale brightness-50",
-          )}
-          draggable={false}
-        />
-      );
-    }
-    return (
-      <img
-        src={src}
-        alt={`${milestone.name} shield`}
-        width={size}
-        height={size}
-        onError={() => setFailed(true)}
-        className={cn(
-          "select-none object-contain transition-all",
-          muted && "opacity-30 grayscale brightness-50",
-        )}
-        style={{ width: size, height: size }}
-        draggable={false}
-      />
-    );
-  }
-  return <ShieldFallback level={milestone.level} size={size} muted={muted} />;
-}
-
-function ShieldFallback({
+// ---------- Shield / Title image assets with graceful fallbacks ----------
+function RankShieldImg({
   level,
-  size,
-  muted,
+  unlocked = true,
+  className,
 }: {
   level: number;
-  size: number;
-  muted?: boolean;
+  unlocked?: boolean;
+  className?: string;
 }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div
+        className={cn(
+          "grid place-items-center rounded-xl bg-secondary text-muted-foreground",
+          !unlocked && "opacity-30 grayscale brightness-50",
+          className,
+        )}
+      >
+        <Lock className="h-6 w-6" />
+      </div>
+    );
+  }
   return (
-    <div
-      className={cn("relative grid place-items-center", muted && "opacity-30 grayscale brightness-50")}
-      style={{ width: size, height: size }}
-    >
-      <svg viewBox="0 0 100 110" width={size} height={size}>
-        <defs>
-          <linearGradient id={`sg-${level}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.55 0.22 27)" />
-            <stop offset="100%" stopColor="oklch(0.28 0.18 27)" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M50 4 L92 18 V54 C92 82 72 100 50 106 C28 100 8 82 8 54 V18 Z"
-          fill={`url(#sg-${level})`}
-          stroke="oklch(0.78 0.14 78)"
-          strokeWidth="2"
-        />
-        <text
-          x="50"
-          y="62"
-          textAnchor="middle"
-          fontFamily="Poppins, sans-serif"
-          fontWeight="900"
-          fontSize="34"
-          fill="oklch(0.98 0.01 90)"
-        >
-          {level}
-        </text>
-      </svg>
-    </div>
+    <img
+      src={`/shields/shield-${level}.png`}
+      alt={`Level ${level} Shield`}
+      onError={() => setFailed(true)}
+      className={cn(
+        "select-none object-contain transition-all",
+        !unlocked && "opacity-30 grayscale brightness-50",
+        className,
+      )}
+      draggable={false}
+    />
   );
 }
 
-function TitleAsset({
-  milestone,
-  boxClassName,
-  fallbackClassName,
-  muted = false,
+function RankTitleImg({
+  level,
+  title,
+  unlocked = true,
+  className,
 }: {
-  milestone: Milestone;
-  boxClassName?: string;
-  fallbackClassName?: string;
-  muted?: boolean;
+  level: number;
+  title: string;
+  unlocked?: boolean;
+  className?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = `/shields/title-${milestone.level}.png`;
-  if (!failed) {
+  if (failed) {
     return (
-      <img
-        src={src}
-        alt={milestone.name}
-        onError={() => setFailed(true)}
+      <span
         className={cn(
-          "select-none object-contain transition-all",
-          boxClassName ?? "max-h-[40px] w-auto object-contain",
-          muted && "opacity-30 grayscale brightness-50",
+          "truncate text-center text-[11px] font-black uppercase tracking-[0.18em]",
+          !unlocked && "opacity-30 grayscale",
+          className,
         )}
-        draggable={false}
-      />
+      >
+        {title}
+      </span>
     );
   }
   return (
-    <div
+    <img
+      src={`/shields/title-${level}.png`}
+      alt={title}
+      onError={() => setFailed(true)}
       className={cn(
-        "flex items-center gap-2 rounded-full border border-accent-amber/40 bg-accent-amber/10 px-4 py-1.5",
-        muted && "opacity-30 grayscale brightness-50",
-        fallbackClassName,
+        "select-none object-contain transition-all",
+        !unlocked && "opacity-30 grayscale brightness-50",
+        className,
       )}
-    >
-      <Shield className="h-3.5 w-3.5 text-accent-amber" />
-      <span className="truncate text-[11px] font-black uppercase tracking-[0.18em] text-accent-amber">
-        {milestone.name}
-      </span>
-    </div>
+      draggable={false}
+    />
   );
 }
