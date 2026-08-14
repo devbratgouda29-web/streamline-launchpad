@@ -872,7 +872,7 @@ function RankModal({
     >
       <div
         className={cn(
-          "relative w-full max-w-sm overflow-hidden rounded-3xl border bg-card p-6 shadow-2xl",
+          "relative w-full max-w-sm overflow-hidden rounded-3xl border bg-card px-3 py-4 shadow-2xl",
           isCurrent
             ? "border-accent-amber shadow-accent-amber/20"
             : unlocked
@@ -883,7 +883,7 @@ function RankModal({
       >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-muted-foreground hover:bg-secondary"
+          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full text-muted-foreground hover:bg-secondary"
           aria-label="Close rank details"
         >
           <X className="h-4 w-4" />
@@ -903,12 +903,8 @@ function RankModal({
             {isCurrent ? "Your Current Rank" : unlocked ? "Unlocked" : "Locked"}
           </span>
 
-          <div className="relative flex h-52 w-full items-center justify-center">
-            <RankShieldImg
-              level={milestone.level}
-              unlocked={unlocked}
-              className="h-48 max-h-48 w-auto"
-            />
+          <div className="relative flex w-full items-center justify-center">
+            <RankShieldImg level={milestone.level} unlocked={unlocked} />
             {!unlocked && (
               <span className="pointer-events-none absolute inset-0 grid place-items-center">
                 <Lock className="h-8 w-8 text-muted-foreground" />
@@ -920,7 +916,6 @@ function RankModal({
             level={milestone.level}
             title={milestone.name}
             unlocked={unlocked}
-            className="h-10 md:h-12 w-full"
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
