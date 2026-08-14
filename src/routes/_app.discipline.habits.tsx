@@ -622,10 +622,10 @@ function ClockView({
           </div>
         </div>
 
-        {/* Side-by-side rank identity: shield + title, fixed 96px cap, aspect preserved */}
+        {/* Side-by-side rank identity: shield + title */}
         <div className="flex w-full items-center justify-center gap-4">
           <RankShieldImg level={milestone.level} unlocked className="h-24 max-h-24 w-auto" />
-          <RankTitleImg level={milestone.level} title={milestone.name} unlocked className="h-24 max-h-24 w-auto max-w-[70%]" />
+          <RankTitleImg level={milestone.level} title={milestone.name} unlocked className="h-10 md:h-12 w-full" />
         </div>
         <p className="max-w-sm text-center text-[13px] italic leading-relaxed text-muted-foreground">
           {milestone.desc}
@@ -807,7 +807,7 @@ function RankColumnView({
               )}
             >
               {/* Shield */}
-              <div className="relative flex h-40 w-full items-center justify-center">
+              <div className="relative flex w-full items-center justify-center">
                 <RankShieldImg level={m.level} unlocked={unlocked} />
                 {!unlocked && (
                   <span className="pointer-events-none absolute inset-0 grid place-items-center">
@@ -821,25 +821,25 @@ function RankColumnView({
                 <RankTitleImg level={m.level} title={m.name} unlocked={unlocked} />
 
                 {/* Level + status */}
-                <div className="flex w-full flex-col items-center gap-1">
+                <div className="flex w-full flex-col items-center gap-1.5">
                   <span
                     className={cn(
-                      "whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.14em]",
+                      "whitespace-nowrap text-xs font-semibold tracking-wider",
                       isCurrent ? "text-accent-amber" : "text-muted-foreground",
                     )}
                   >
-                    Lvl {m.level} · {m.streak}d
+                    LVL {m.level} · {m.streak}d
                   </span>
                   {isCurrent ? (
-                    <span className="rounded-full bg-accent-amber px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-accent-amber-foreground">
+                    <span className="rounded-full bg-accent-amber py-1 px-3 text-xs font-black uppercase tracking-wider text-accent-amber-foreground">
                       You
                     </span>
                   ) : unlocked ? (
-                    <span className="rounded-full bg-success/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-success">
+                    <span className="rounded-full bg-success/15 py-1 px-3 text-xs font-black uppercase tracking-wider text-success">
                       Unlocked
                     </span>
                   ) : (
-                    <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-muted-foreground">
+                    <span className="rounded-full bg-secondary py-1 px-3 text-xs font-black uppercase tracking-wider text-muted-foreground">
                       Locked
                     </span>
                   )}
@@ -920,7 +920,7 @@ function RankModal({
             level={milestone.level}
             title={milestone.name}
             unlocked={unlocked}
-            className="max-h-10 w-auto"
+            className="h-10 md:h-12 w-full"
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -957,7 +957,7 @@ function RankShieldImg({
     return (
       <div
         className={cn(
-          "grid w-28 h-28 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
+          "grid w-36 h-36 md:w-40 md:h-40 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
           !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
@@ -972,7 +972,7 @@ function RankShieldImg({
       alt={`Level ${level} Shield`}
       onError={() => setFailed(true)}
       className={cn(
-        "w-28 h-28 mx-auto object-contain drop-shadow-md select-none transition-all",
+        "w-36 h-36 md:w-40 md:h-40 mx-auto object-contain drop-shadow-md select-none transition-all",
         !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
@@ -997,7 +997,7 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "block max-h-8 w-auto mx-auto mt-2 mb-1 truncate text-center text-[11px] font-black uppercase tracking-[0.18em]",
+          "block h-10 md:h-12 w-full mx-auto my-2 truncate text-center text-xs font-black uppercase tracking-wider",
           !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
@@ -1012,7 +1012,7 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "max-h-8 w-auto mx-auto object-contain mt-2 mb-1 select-none transition-all",
+        "h-10 md:h-12 w-full mx-auto object-contain my-2 select-none transition-all",
         !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
