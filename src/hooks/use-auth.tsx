@@ -171,6 +171,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const signOut = useCallback(async () => {
+    try {
+      if (typeof window !== "undefined") localStorage.removeItem("ftlb.devpass.admin");
+    } catch {
+      /* ignore */
+    }
     await supabase.auth.signOut();
     setSession(null);
     setProfile(null);
