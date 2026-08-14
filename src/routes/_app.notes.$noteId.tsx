@@ -170,7 +170,7 @@ function NoteDetailPage() {
       <div className="sticky top-2 z-10 flex gap-2">
         {IS_TESTING_MODE ? (
           <Button asChild className="flex-1 bg-crimson-gradient text-primary-foreground shadow-md">
-            <Link to="/reader/$noteId" params={{ noteId }}>
+            <Link to="/reader/$noteId" params={{ noteId }} search={{ mode: "standard" }}>
               Read Now · Free (Demo Mode)
             </Link>
           </Button>
