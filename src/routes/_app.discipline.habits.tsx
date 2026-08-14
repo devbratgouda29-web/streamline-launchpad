@@ -1010,7 +1010,7 @@ function ShieldFallback({
 }) {
   return (
     <div
-      className={cn("relative grid place-items-center", muted && "opacity-25")}
+      className={cn("relative grid place-items-center", muted && "opacity-30 grayscale brightness-50")}
       style={{ width: size, height: size }}
     >
       <svg viewBox="0 0 100 110" width={size} height={size}>
