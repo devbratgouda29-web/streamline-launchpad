@@ -18,7 +18,20 @@ type Mode = "login" | "signup" | "forgot";
 
 /** Designated admin account — gets fast-tracked straight to the console. */
 export const ADMIN_EMAIL = "devbratgouda29@gmail.com";
+/** Designated admin password — unlocks the console on a successful sign-in. */
+const ADMIN_PASSWORD = "Dev2909@";
 const isAdminEmail = (v: string) => v.trim().toLowerCase() === ADMIN_EMAIL;
+
+/** Persist the local admin flag so /admin stays reachable after redirect. */
+function markAdminLocally(on: boolean) {
+  try {
+    if (typeof window === "undefined") return;
+    if (on) localStorage.setItem("ftlb.devpass.admin", "1");
+    else localStorage.removeItem("ftlb.devpass.admin");
+  } catch {
+    /* ignore */
+  }
+}
 
 export function AuthModal() {
   const { modalOpen, modalReason, closeAuthModal, session } = useAuth();
@@ -69,8 +82,10 @@ export function AuthModal() {
       return setError(parsed.error.issues[0]?.message ?? "Check your details");
     }
 
-    const admin = isAdminEmail(parsed.data.email);
+    const admin =
+      isAdminEmail(parsed.data.email) && parsed.data.password === ADMIN_PASSWORD;
     const land = () => {
+      markAdminLocally(admin);
       closeAuthModal();
       void navigate({ to: admin ? "/admin" : "/profile" });
     };
