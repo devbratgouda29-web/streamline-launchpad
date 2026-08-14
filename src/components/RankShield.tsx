@@ -1,5 +1,7 @@
 import { Shield, Medal, Trophy, Crown, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+
 
 // Lookup PNG override in src/assets/badges/rank_${level}.png if present.
 // import.meta.glob returns an empty object when the folder doesn't exist yet,
@@ -160,8 +162,26 @@ export function TierShieldSVG({
   );
 }
 
+/** Hero shield image with graceful fallback to the generated SVG. */
+function HeroShieldImg({ level, tier }: { level: number; tier: Tier }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return <TierShieldSVG level={level} size={192} />;
+  }
+  return (
+    <img
+      src={`/shields/shield-${level}.png`}
+      alt={`Rank ${level} shield`}
+      onError={() => setFailed(true)}
+      className="w-48 h-48 md:w-56 md:h-56 mx-auto object-contain drop-shadow-xl select-none transition-all"
+      draggable={false}
+    />
+  );
+}
+
 /** Prominent top-of-dashboard rank shield frame. */
 export function RankShieldFrame({
+
   level,
   rankName,
   streak,
@@ -205,19 +225,7 @@ export function RankShieldFrame({
           {tier.name} Tier · Lvl {level} / 15
         </span>
 
-        <div className="relative">
-          {png ? (
-            <img
-              src={png}
-              alt={`Rank ${level} badge`}
-              className="h-40 w-40 select-none object-contain"
-              style={{ filter: `drop-shadow(0 8px 28px ${tier.glow})` }}
-              draggable={false}
-            />
-          ) : (
-            <TierShieldSVG level={level} size={168} />
-          )}
-        </div>
+        <HeroShieldImg level={level} tier={tier} />
 
         <h2
           className="text-center text-lg font-black uppercase tracking-[0.14em]"
@@ -225,6 +233,7 @@ export function RankShieldFrame({
         >
           {rankName}
         </h2>
+
 
         <div className="w-full">
           <div className="mb-1.5 flex items-center justify-between text-[11px]">
