@@ -997,8 +997,8 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "block h-10 md:h-12 w-full mx-auto my-2 truncate text-center text-xs font-black uppercase tracking-wider",
-          !unlocked && "opacity-50 grayscale contrast-125",
+          "block h-auto min-h-10 md:min-h-12 w-4/5 max-w-[200px] mx-auto my-3 truncate text-center text-xs font-black uppercase tracking-wider",
+          !unlocked && "opacity-70 grayscale brightness-90",
           className,
         )}
       >
@@ -1012,11 +1012,12 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "h-10 md:h-12 w-full mx-auto object-contain my-2 select-none transition-all",
-        !unlocked && "opacity-50 grayscale contrast-125",
+        "w-4/5 max-w-[200px] h-auto mx-auto object-contain my-3 select-none transition-all",
+        !unlocked && "opacity-70 grayscale brightness-90",
         className,
       )}
       draggable={false}
     />
   );
 }
+
