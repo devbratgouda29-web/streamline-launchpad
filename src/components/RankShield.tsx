@@ -162,8 +162,26 @@ export function TierShieldSVG({
   );
 }
 
+/** Hero shield image with graceful fallback to the generated SVG. */
+function HeroShieldImg({ level, tier }: { level: number; tier: Tier }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return <TierShieldSVG level={level} size={192} />;
+  }
+  return (
+    <img
+      src={`/shields/shield-${level}.png`}
+      alt={`Rank ${level} shield`}
+      onError={() => setFailed(true)}
+      className="w-48 h-48 md:w-56 md:h-56 mx-auto object-contain drop-shadow-xl select-none transition-all"
+      draggable={false}
+    />
+  );
+}
+
 /** Prominent top-of-dashboard rank shield frame. */
 export function RankShieldFrame({
+
   level,
   rankName,
   streak,
