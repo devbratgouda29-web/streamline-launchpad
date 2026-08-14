@@ -913,10 +913,10 @@ function RankModal({
           </span>
 
           <div className="relative flex h-52 w-full items-center justify-center">
-            <ShieldAsset
-              milestone={milestone}
-              boxClassName="h-48 max-h-48 w-auto object-contain"
-              muted={!unlocked}
+            <RankShieldImg
+              level={milestone.level}
+              unlocked={unlocked}
+              className="h-48 max-h-48 w-auto object-contain"
             />
             {!unlocked && (
               <span className="pointer-events-none absolute inset-0 grid place-items-center">
@@ -925,11 +925,11 @@ function RankModal({
             )}
           </div>
 
-          <TitleAsset
-            milestone={milestone}
-            boxClassName="max-h-[40px] w-auto object-contain"
-            fallbackClassName="w-full"
-            muted={!unlocked}
+          <RankTitleImg
+            level={milestone.level}
+            title={milestone.name}
+            unlocked={unlocked}
+            className="max-h-[40px] w-auto object-contain"
           />
 
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
