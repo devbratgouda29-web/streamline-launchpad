@@ -963,7 +963,7 @@ function ShieldAsset({
   boxClassName?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = `/shields/${milestone.shield}`;
+  const src = `/shields/shield-${milestone.level}.png`;
   if (!failed) {
     if (boxClassName) {
       return (
@@ -971,7 +971,11 @@ function ShieldAsset({
           src={src}
           alt={`${milestone.name} shield`}
           onError={() => setFailed(true)}
-          className={cn("select-none object-contain", boxClassName, muted && "opacity-25")}
+          className={cn(
+            "select-none object-contain transition-all",
+            boxClassName,
+            muted && "opacity-30 grayscale brightness-50",
+          )}
           draggable={false}
         />
       );
@@ -983,7 +987,10 @@ function ShieldAsset({
         width={size}
         height={size}
         onError={() => setFailed(true)}
-        className={cn("select-none object-contain", muted && "opacity-25")}
+        className={cn(
+          "select-none object-contain transition-all",
+          muted && "opacity-30 grayscale brightness-50",
+        )}
         style={{ width: size, height: size }}
         draggable={false}
       />
