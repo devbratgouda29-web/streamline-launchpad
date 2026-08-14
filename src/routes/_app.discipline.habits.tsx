@@ -624,8 +624,8 @@ function ClockView({
 
         {/* Side-by-side rank identity: shield + title, fixed 96px cap, aspect preserved */}
         <div className="flex w-full items-center justify-center gap-4">
-          <ShieldAsset milestone={milestone} boxClassName="h-24 max-h-24 w-auto" />
-          <TitleAsset milestone={milestone} boxClassName="h-24 max-h-24 w-auto max-w-[70%]" />
+          <RankShieldImg level={milestone.level} className="h-24 max-h-24 w-auto" />
+          <RankTitleImg level={milestone.level} title={milestone.name} className="h-24 max-h-24 w-auto max-w-[70%]" />
         </div>
         <p className="max-w-sm text-center text-[13px] italic leading-relaxed text-muted-foreground">
           {milestone.desc}
