@@ -952,7 +952,7 @@ function RankShieldImg({
     return (
       <div
         className={cn(
-          "grid w-44 h-44 md:w-52 md:h-52 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
+          "grid w-48 h-48 md:w-56 md:h-56 place-items-center rounded-xl bg-secondary text-muted-foreground mx-auto",
           !unlocked && "opacity-50 grayscale contrast-125",
           className,
         )}
@@ -967,7 +967,7 @@ function RankShieldImg({
       alt={`Level ${level} Shield`}
       onError={() => setFailed(true)}
       className={cn(
-        "w-44 h-44 md:w-52 md:h-52 object-contain mx-auto drop-shadow-md select-none transition-all",
+        "w-48 h-48 md:w-56 md:h-56 object-contain mx-auto drop-shadow-md select-none transition-all",
         !unlocked && "opacity-50 grayscale contrast-125",
         className,
       )}
