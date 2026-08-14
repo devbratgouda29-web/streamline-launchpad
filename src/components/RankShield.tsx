@@ -1,5 +1,7 @@
 import { Shield, Medal, Trophy, Crown, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+
 
 // Lookup PNG override in src/assets/badges/rank_${level}.png if present.
 // import.meta.glob returns an empty object when the folder doesn't exist yet,
