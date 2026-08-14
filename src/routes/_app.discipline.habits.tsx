@@ -992,7 +992,7 @@ function RankTitleImg({
     return (
       <span
         className={cn(
-          "block h-14 md:h-16 w-full mx-auto my-1 truncate text-center text-xs font-black uppercase tracking-wider",
+          "block w-[88%] h-auto min-h-[40px] mx-auto my-3 truncate text-center text-xs font-black uppercase tracking-wider",
           !unlocked && "opacity-70 grayscale brightness-90",
           className,
         )}
@@ -1007,7 +1007,7 @@ function RankTitleImg({
       alt={title}
       onError={() => setFailed(true)}
       className={cn(
-        "w-full h-14 md:h-16 object-contain scale-110 my-1 mx-auto select-none transition-all",
+        "w-[88%] h-auto max-h-24 mx-auto object-contain my-3 drop-shadow-md select-none transition-all",
         !unlocked && "opacity-70 grayscale brightness-90",
         className,
       )}
