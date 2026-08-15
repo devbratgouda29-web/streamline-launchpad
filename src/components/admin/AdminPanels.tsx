@@ -15,6 +15,7 @@ import {
 import { bypassAllTimers, getAllItems, getFracturedItems, restoreItem, setDisplayTier, type RevisionItem } from "@/lib/revision-engine";
 import { addStudySession, type StudySubject } from "@/lib/study-sessions";
 import { IS_TESTING_MODE } from "@/lib/testing-mode";
+import { NO_SESSION_MESSAGE, hasSupabaseSession } from "@/lib/session-guard";
 import { cn } from "@/lib/utils";
 
 const card = "flex flex-col gap-3 rounded-2xl bg-card p-4 ring-1 ring-border";
@@ -35,6 +36,10 @@ export function PurchaseAnalyticsCard() {
     let active = true;
     void (async () => {
       try {
+        if (!(await hasSupabaseSession())) {
+          if (active) setError(NO_SESSION_MESSAGE);
+          return;
+        }
         const res = await fetchAnalytics();
         if (active) setData(res);
       } catch (e) {
@@ -107,6 +112,11 @@ export function UserManagementCard() {
 
   const load = useCallback(async () => {
     try {
+      if (!(await hasSupabaseSession())) {
+        setError(NO_SESSION_MESSAGE);
+        setUsers([]);
+        return;
+      }
       setUsers(await fetchUsers());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load users");
@@ -189,6 +199,11 @@ export function ReviewModerationCard() {
 
   const load = useCallback(async () => {
     try {
+      if (!(await hasSupabaseSession())) {
+        setError(NO_SESSION_MESSAGE);
+        setReviews([]);
+        return;
+      }
       setReviews(await fetchReviews());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load reviews");
