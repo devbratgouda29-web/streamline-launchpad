@@ -19,6 +19,7 @@ import {
 
 
 import { getNoteSales } from "@/lib/notes.functions";
+import { hasSupabaseSession } from "@/lib/session-guard";
 import {
   PurchaseAnalyticsCard,
   ReviewModerationCard,
