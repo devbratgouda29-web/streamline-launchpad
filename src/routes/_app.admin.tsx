@@ -19,6 +19,7 @@ import {
 
 
 import { getNoteSales } from "@/lib/notes.functions";
+import { hasSupabaseSession } from "@/lib/session-guard";
 import {
   PurchaseAnalyticsCard,
   ReviewModerationCard,
@@ -70,11 +71,17 @@ function AdminConsole() {
   const refresh = useCallback(async () => {
     try {
       setNotes(await listNotes(true));
-      setSales(await fetchSales());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load notes");
     } finally {
       setLoading(false);
+    }
+    // Sales need a real signed-in session (bearer token); never fatal.
+    try {
+      if (await hasSupabaseSession()) setSales(await fetchSales());
+      else setSales({});
+    } catch {
+      setSales({});
     }
   }, [fetchSales]);
 
