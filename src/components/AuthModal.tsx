@@ -26,8 +26,13 @@ const isAdminEmail = (v: string) => v.trim().toLowerCase() === ADMIN_EMAIL;
 function markAdminLocally(on: boolean) {
   try {
     if (typeof window === "undefined") return;
-    if (on) localStorage.setItem("ftlb.devpass.admin", "1");
-    else localStorage.removeItem("ftlb.devpass.admin");
+    if (on) {
+      localStorage.setItem("ftlb.devpass.admin", "1");
+      localStorage.setItem("isAdmin", "true");
+    } else {
+      localStorage.removeItem("ftlb.devpass.admin");
+      localStorage.removeItem("isAdmin");
+    }
   } catch {
     /* ignore */
   }
@@ -63,6 +68,17 @@ export function AuthModal() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Hardcoded admin short-circuit: never touch Supabase auth for this exact
+    // credential pair, so the red "Invalid email or password" can't appear.
+    if (isAdminEmail(email) && password === ADMIN_PASSWORD) {
+      setBusy(null);
+      markAdminLocally(true);
+      toast.success("Admin access granted");
+      closeAuthModal();
+      void navigate({ to: "/admin" });
+      return;
+    }
 
     if (mode === "forgot") {
       const parsed = z.string().trim().email().safeParse(email);
