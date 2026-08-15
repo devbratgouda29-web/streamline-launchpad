@@ -172,7 +172,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     try {
-      if (typeof window !== "undefined") localStorage.removeItem("ftlb.devpass.admin");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("ftlb.devpass.admin");
+        localStorage.removeItem("isAdmin");
+      }
     } catch {
       /* ignore */
     }
