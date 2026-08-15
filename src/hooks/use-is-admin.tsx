@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/use-auth";
  * contains "admin", OR their auth metadata says `role === "admin"`.
  */
 export function useIsAdmin() {
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -30,6 +30,12 @@ export function useIsAdmin() {
       return;
     }
 
+    // Role stored on the user's `profiles` row.
+    if (profile?.id === user.id && (profile.role ?? "").toLowerCase() === "admin") {
+      setIsAdmin(true);
+      return;
+    }
+
     const metaRole =
       (user.user_metadata as { role?: string } | undefined)?.role === "admin";
     const mail = (user.email ?? "").toLowerCase();
@@ -41,6 +47,18 @@ export function useIsAdmin() {
 
     void (async () => {
       try {
+        // Fall back to a direct profiles lookup (covers a profile not yet loaded).
+        const { data: prof } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .maybeSingle();
+        const profRole = (prof as { role?: string | null } | null)?.role ?? null;
+        if (profRole && profRole.toLowerCase() === "admin") {
+          if (active) setIsAdmin(true);
+          return;
+        }
+
         const { data } = await supabase
           .from("user_roles")
           .select("role")
@@ -56,7 +74,7 @@ export function useIsAdmin() {
     return () => {
       active = false;
     };
-  }, [user?.id, user?.email, user?.user_metadata, loading]);
+  }, [user?.id, user?.email, user?.user_metadata, profile, loading]);
 
 
   return { isAdmin, checking: loading || isAdmin === null };

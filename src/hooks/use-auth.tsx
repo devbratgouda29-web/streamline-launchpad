@@ -16,6 +16,8 @@ export type Profile = {
   avatar_url: string | null;
   email: string | null;
   created_at: string;
+  /** Optional role column on `profiles` ("admin" grants console access). */
+  role?: string | null;
 };
 
 type AuthGateReason =
@@ -68,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const { data } = await supabase
         .from("profiles")
-        .select("id, full_name, avatar_url, email, created_at")
+        .select("*")
         .eq("id", userId)
         .maybeSingle();
       setProfile((data as Profile | null) ?? null);
