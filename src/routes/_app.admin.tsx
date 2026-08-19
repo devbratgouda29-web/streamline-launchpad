@@ -19,7 +19,6 @@ import {
 
 
 import { getNoteSales } from "@/lib/notes.functions";
-import { hasSupabaseSession } from "@/lib/session-guard";
 import {
   PurchaseAnalyticsCard,
   ReviewModerationCard,
@@ -76,10 +75,8 @@ function AdminConsole() {
     } finally {
       setLoading(false);
     }
-    // Sales need a real signed-in session (bearer token); never fatal.
     try {
-      if (await hasSupabaseSession()) setSales(await fetchSales());
-      else setSales({});
+      setSales(await fetchSales());
     } catch {
       setSales({});
     }
