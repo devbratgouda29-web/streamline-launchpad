@@ -6,8 +6,8 @@ import { useAuth } from "@/hooks/use-auth";
  * Client-side admin check (UI affordance only — real access is enforced by RLS
  * and the `has_role()` check inside every admin server function).
  *
- * A user counts as admin when they hold the `admin` role row, OR their email
- * contains "admin", OR their auth metadata says `role === "admin"`.
+ * A user counts as admin only when they have a real Supabase session AND hold
+ * the `admin` role (via `user_roles`, or a `role` column on their profile).
  */
 export function useIsAdmin() {
   const { user, profile, loading } = useAuth();
@@ -15,14 +15,6 @@ export function useIsAdmin() {
 
   useEffect(() => {
     let active = true;
-
-    // Dev Pass bypass — local override so the console is reachable in preview.
-    try {
-      if (typeof window !== "undefined" && localStorage.getItem("ftlb.devpass.admin") === "1") {
-        setIsAdmin(true);
-        return;
-      }
-    } catch { /* ignore */ }
 
     if (loading) return;
     if (!user?.id) {
@@ -36,29 +28,8 @@ export function useIsAdmin() {
       return;
     }
 
-    const metaRole =
-      (user.user_metadata as { role?: string } | undefined)?.role === "admin";
-    const mail = (user.email ?? "").toLowerCase();
-    const emailAdmin = mail.includes("admin") || mail === "devbratgouda29@gmail.com";
-    if (metaRole || emailAdmin) {
-      setIsAdmin(true);
-      return;
-    }
-
     void (async () => {
       try {
-        // Fall back to a direct profiles lookup (covers a profile not yet loaded).
-        const { data: prof } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .maybeSingle();
-        const profRole = (prof as { role?: string | null } | null)?.role ?? null;
-        if (profRole && profRole.toLowerCase() === "admin") {
-          if (active) setIsAdmin(true);
-          return;
-        }
-
         const { data } = await supabase
           .from("user_roles")
           .select("role")
@@ -74,7 +45,7 @@ export function useIsAdmin() {
     return () => {
       active = false;
     };
-  }, [user?.id, user?.email, user?.user_metadata, profile, loading]);
+  }, [user?.id, profile, loading]);
 
 
   return { isAdmin, checking: loading || isAdmin === null };
