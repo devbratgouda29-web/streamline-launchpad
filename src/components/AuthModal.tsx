@@ -22,17 +22,12 @@ export const ADMIN_EMAIL = "devbratgouda29@gmail.com";
 const ADMIN_PASSWORD = "Dev2909@";
 const isAdminEmail = (v: string) => v.trim().toLowerCase() === ADMIN_EMAIL;
 
-/** Persist the local admin flag so /admin stays reachable after redirect. */
-function markAdminLocally(on: boolean) {
+/** Clear any legacy local admin flags — admin now comes from the real role. */
+function clearLegacyAdminFlags() {
   try {
     if (typeof window === "undefined") return;
-    if (on) {
-      localStorage.setItem("ftlb.devpass.admin", "1");
-      localStorage.setItem("isAdmin", "true");
-    } else {
-      localStorage.removeItem("ftlb.devpass.admin");
-      localStorage.removeItem("isAdmin");
-    }
+    localStorage.removeItem("ftlb.devpass.admin");
+    localStorage.removeItem("isAdmin");
   } catch {
     /* ignore */
   }
@@ -69,17 +64,6 @@ export function AuthModal() {
     e.preventDefault();
     setError(null);
 
-    // Hardcoded admin short-circuit: never touch Supabase auth for this exact
-    // credential pair, so the red "Invalid email or password" can't appear.
-    if (isAdminEmail(email) && password === ADMIN_PASSWORD) {
-      setBusy(null);
-      markAdminLocally(true);
-      toast.success("Admin access granted");
-      closeAuthModal();
-      void navigate({ to: "/admin" });
-      return;
-    }
-
     if (mode === "forgot") {
       const parsed = z.string().trim().email().safeParse(email);
       if (!parsed.success) return setError("Enter a valid email");
@@ -101,7 +85,7 @@ export function AuthModal() {
     const admin =
       isAdminEmail(parsed.data.email) && parsed.data.password === ADMIN_PASSWORD;
     const land = () => {
-      markAdminLocally(admin);
+      clearLegacyAdminFlags();
       closeAuthModal();
       void navigate({ to: admin ? "/admin" : "/profile" });
     };
